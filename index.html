@@ -1,0 +1,164 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#c7c4be">
+<title>My Fan Page</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:#eee;color:#222}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+#app{max-width:460px;margin:auto;min-height:100dvh;background:#f6f6f6;padding-bottom:85px}
+header{height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 23px;font-size:12px;font-weight:700}
+.screen{display:none;padding:20px}
+.screen.active{display:block}
+.home{
+ min-height:calc(100dvh - 133px);
+ background-image:url("wallpaper.jpg");
+ background-position:center 43%;
+ background-size:cover;
+ background-repeat:no-repeat;
+ position:relative;
+ padding:18px 23px 28px;
+ display:flex;flex-direction:column;
+}
+.home:before{content:"";position:absolute;inset:0;background:linear-gradient(#00000005,transparent 50%,#00000016);pointer-events:none}
+.home>*{position:relative}
+.status{display:flex;justify-content:space-between;font-size:12px;font-weight:700}
+.clock{text-align:center;margin:48px 0 30px;color:white;text-shadow:0 1px 5px #3338}
+.clock .date{font-size:16px}
+.clock .time{font-size:65px;font-weight:300;letter-spacing:-3px}
+.widget{border:1px solid #ffffff70;background:#ffffffa6;backdrop-filter:blur(12px);border-radius:22px;padding:14px;color:#242424;margin-bottom:25px}
+.widget small{font-size:10px;color:#555}
+.apps{display:grid;grid-template-columns:repeat(4,1fr);gap:22px 8px;margin-top:auto}
+.app{border:0;background:none;display:flex;align-items:center;flex-direction:column;gap:7px;font-size:10px;color:white;text-shadow:0 1px 4px #333}
+.icon{height:54px;width:54px;border-radius:15px;display:grid;place-items:center;font-size:23px;background:linear-gradient(145deg,#fafafa,#c7c7c9);color:#343438;box-shadow:0 3px 9px #0003;border:1px solid #fff8}
+.dock{margin-top:24px;padding:12px;border-radius:25px;background:#ffffff75;backdrop-filter:blur(15px);display:flex;justify-content:space-around}
+.dock .icon{height:48px;width:48px}
+h1{font-size:28px;margin:10px 0 22px;letter-spacing:-1px}
+h2{font-size:19px}
+.card{background:white;border:1px solid #e5e5e5;border-radius:17px;padding:16px;margin-bottom:12px}
+.muted{color:#888;font-size:12px}
+button.action{border:0;border-radius:11px;background:#222;color:white;padding:11px 14px}
+button.light{border:1px solid #ddd;border-radius:11px;background:#f4f4f4;color:#222;padding:9px 12px}
+input,textarea{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin:6px 0 12px;background:white}
+textarea{min-height:85px}
+.row{display:flex;gap:8px}
+.row>*{min-width:0}
+.row input{flex:1}
+.bubble{padding:12px 14px;border-radius:16px;margin:10px 0;max-width:85%;white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px;line-height:1.5}
+.bot{background:#e7e7e9;margin-right:auto}
+.user{background:#222;color:white;margin-left:auto}
+#messages{height:45dvh;min-height:250px;overflow:auto}
+nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:460px;background:#fafafaeF;backdrop-filter:blur(16px);display:flex;justify-content:space-around;padding:10px 3px calc(10px + env(safe-area-inset-bottom));border-top:1px solid #ddd}
+nav button{border:0;background:none;color:#555;font-size:10px}
+nav b{display:block;font-size:19px;margin-bottom:3px}
+.entry{white-space:pre-wrap;overflow-wrap:anywhere}
+img.photo{width:100%;border-radius:12px;margin-top:8px}
+</style>
+</head>
+<body>
+<div id="app">
+<header><span>◉</span><span>MY FAN PAGE</span><span id="battery">100% ▰</span></header>
+
+<section id="home" class="screen home active">
+ <div class="status"><span>● ● ●</span><span>◉ ▰</span></div>
+ <div class="clock"><div class="date" id="date"></div><div class="time" id="time"></div></div>
+ <div class="widget"><small>YOUR PERSONAL SPACE</small><h2 id="homeName">YOUR CHARACTER</h2><div class="muted">오늘도 좋은 하루 보내기 ♡</div></div>
+ <div class="apps">
+  <button class="app" data-page="talk"><span class="icon">●</span>TALK</button>
+  <button class="app" data-page="profile"><span class="icon">♙</span>PROFILE</button>
+  <button class="app" data-page="social"><span class="icon">▤</span>SOCIAL</button>
+  <button class="app" data-page="gallery"><span class="icon">▧</span>GALLERY</button>
+  <button class="app" data-page="diary"><span class="icon">✎</span>DIARY</button>
+ </div>
+ <div class="dock">
+  <button class="app" data-page="talk"><span class="icon">✉</span></button>
+  <button class="app" data-page="profile"><span class="icon">♙</span></button>
+  <button class="app" data-page="gallery"><span class="icon">▧</span></button>
+ </div>
+ <p style="font-size:9px;text-align:center;color:white;text-shadow:0 1px 3px #333">UNOFFICIAL FAN-MADE PAGE · NOT AFFILIATED WITH ANY ARTIST</p>
+</section>
+
+<section id="talk" class="screen">
+ <button class="light" data-page="home">← 홈</button><h1>TALK.</h1>
+ <div class="card"><b id="talkName">YOUR CHARACTER</b><div class="muted">팬메이드 대화 시뮬레이션</div></div>
+ <div id="messages"></div>
+ <form id="chatForm" class="row"><input id="chatInput" placeholder="메시지 입력..." maxlength="300" required><button class="action">전송</button></form>
+ <button id="clearChat" class="light">대화 초기화</button>
+</section>
+
+<section id="profile" class="screen">
+ <button class="light" data-page="home">← 홈</button><h1>PROFILE.</h1>
+ <div class="card"><h2 id="pName">YOUR CHARACTER</h2><p id="pTag" class="muted"></p><p id="pBio"></p></div>
+ <div class="card"><label>캐릭터 이름<input id="nameInput" maxlength="40"></label><label>한 줄 소개<input id="tagInput" maxlength="80"></label><label>프로필 소개<textarea id="bioInput" maxlength="500"></textarea></label><button id="saveProfile" class="action">저장</button></div>
+ <p class="muted">비공식 팬메이드 콘텐츠이며 실제 인물의 공식 메시지가 아니야.</p>
+</section>
+
+<section id="social" class="screen">
+ <button class="light" data-page="home">← 홈</button><h1>SOCIAL.</h1>
+ <form id="postForm" class="card"><textarea id="postInput" maxlength="1000" placeholder="게시물을 작성해..." required></textarea><button class="action">게시하기</button></form>
+ <div id="posts"></div>
+</section>
+
+<section id="gallery" class="screen">
+ <button class="light" data-page="home">← 홈</button><h1>GALLERY.</h1>
+ <div class="card"><input id="photoInput" type="file" accept="image/*" multiple><p class="muted">사진은 이 브라우저에 저장돼. 용량이 큰 사진을 많이 넣으면 저장 공간이 부족할 수 있어.</p></div>
+ <div id="photos"></div>
+</section>
+
+<section id="diary" class="screen">
+ <button class="light" data-page="home">← 홈</button><h1>DIARY.</h1>
+ <form id="diaryForm" class="card"><input id="diaryTitle" placeholder="제목" maxlength="100" required><textarea id="diaryText" placeholder="메모..." maxlength="3000" required></textarea><button class="action">저장하기</button></form>
+ <div id="diaries"></div>
+</section>
+
+<nav>
+ <button data-page="home"><b>⌂</b>HOME</button>
+ <button data-page="talk"><b>●</b>TALK</button>
+ <button data-page="profile"><b>♙</b>PROFILE</button>
+ <button data-page="social"><b>▤</b>SOCIAL</button>
+ <button data-page="diary"><b>✎</b>DIARY</button>
+</nav>
+</div>
+<script>
+const KEY="my-fan-page-v1";
+const initial={profile:{name:"YOUR CHARACTER",tag:"A little world just for you.",bio:"차분하지만 다정하고 장난을 좋아하는 캐릭터."},chat:[],posts:[],photos:[],diaries:[]};
+let state;
+try{state={...initial,...JSON.parse(localStorage.getItem(KEY)||"{}")};state.profile={...initial.profile,...state.profile};for(const k of ["chat","posts","photos","diaries"])if(!Array.isArray(state[k]))state[k]=[]}catch(e){state=JSON.parse(JSON.stringify(initial))}
+const $=id=>document.getElementById(id);
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state));return true}catch(e){alert("저장 공간이 부족해. 사진이나 기록을 줄여 줘.");return false}}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function go(id){document.querySelectorAll(".screen").forEach(s=>s.classList.toggle("active",s.id===id));window.scrollTo(0,0);if(id==="talk")renderChat();if(id==="profile")fillProfile()}
+document.querySelectorAll("[data-page]").forEach(b=>b.addEventListener("click",()=>go(b.dataset.page)));
+function updateClock(){let d=new Date();$("time").textContent=d.toLocaleTimeString("ko-KR",{hour:"2-digit",minute:"2-digit",hour12:false});$("date").textContent=d.toLocaleDateString("ko-KR",{month:"long",day:"numeric",weekday:"long"})}
+updateClock();setInterval(updateClock,30000);
+function renderProfile(){let p=state.profile;$("homeName").textContent=p.name;$("talkName").textContent=p.name;$("pName").textContent=p.name;$("pTag").textContent=p.tag;$("pBio").textContent=p.bio}
+function fillProfile(){$("nameInput").value=state.profile.name;$("tagInput").value=state.profile.tag;$("bioInput").value=state.profile.bio}
+$("saveProfile").onclick=()=>{let name=$("nameInput").value.trim();if(!name)return alert("이름을 입력해 줘.");state.profile={name,tag:$("tagInput").value.trim(),bio:$("bioInput").value.trim()};save();renderProfile();alert("프로필 저장 완료!")};
+const replies=[
+[/안녕|하이|ㅎㅇ|hello|hi/i,["왔어? 기다리고 있었어.","안녕. 오늘은 어땠어?"]],
+[/보고 ?싶|그리워/,["나도 네가 와 줘서 좋아.","그런 말 들으면 기분 좋아지잖아."]],
+[/힘들|우울|슬퍼|피곤|지쳤/,["오늘 많이 힘들었구나. 잠깐 쉬어도 괜찮아.","오늘 하루 버틴 것만으로도 충분히 잘했어."]],
+[/사랑|좋아해/,["그 말 조금 더 해 줘도 되는데.","갑자기 그렇게 말하면 부끄럽잖아."]],
+[/잘 ?자|굿나잇/,["잘 자. 좋은 꿈 꿔.","오늘도 수고했어. 푹 쉬어."]],
+[/고마워|감사/,["나한테 말해 줘서 고마워.","언제든 편하게 이야기해."]],
+[/밥|먹었/,["밥은 잘 챙겨 먹었어?","끼니 거르지 말고 꼭 챙겨 먹어."]]
+];
+function reply(t){let r=replies.find(([re])=>re.test(t));return r?r[1][Math.floor(Math.random()*r[1].length)]:["진짜? 그다음엔 어떻게 됐어?","조금 더 이야기해 줘. 듣고 있어.","네 생각이 궁금해."][Math.floor(Math.random()*3)]}
+function renderChat(){if(!state.chat.length)state.chat.push({who:"bot",text:"왔어? 오늘은 무슨 이야기 할까?"});$("messages").innerHTML=state.chat.map(m=>`<div class="bubble ${m.who==="user"?"user":"bot"}">${esc(m.text)}</div>`).join("");$("messages").scrollTop=$("messages").scrollHeight;save()}
+$("chatForm").onsubmit=e=>{e.preventDefault();let t=$("chatInput").value.trim();if(!t)return;state.chat.push({who:"user",text:t},{who:"bot",text:reply(t)});state.chat=state.chat.slice(-150);$("chatInput").value="";save();renderChat()};
+$("clearChat").onclick=()=>{if(confirm("대화를 모두 지울까?")){state.chat=[];save();renderChat()}};
+function renderPosts(){$("posts").innerHTML=[...state.posts].reverse().map(p=>`<div class="card"><div class="muted">${esc(p.date)}</div><p class="entry">${esc(p.text)}</p><button class="light" data-delete-post="${p.id}">삭제</button></div>`).join("");document.querySelectorAll("[data-delete-post]").forEach(b=>b.onclick=()=>{state.posts=state.posts.filter(p=>p.id!==b.dataset.deletePost);save();renderPosts()})}
+$("postForm").onsubmit=e=>{e.preventDefault();state.posts.push({id:Date.now().toString(),text:$("postInput").value.trim(),date:new Date().toLocaleString("ko-KR")});$("postInput").value="";save();renderPosts()};
+function renderDiaries(){$("diaries").innerHTML=[...state.diaries].reverse().map(n=>`<div class="card"><h3>${esc(n.title)}</h3><div class="muted">${esc(n.date)}</div><p class="entry">${esc(n.text)}</p><button class="light" data-edit="${n.id}">수정</button> <button class="light" data-del="${n.id}">삭제</button></div>`).join("");document.querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>{let n=state.diaries.find(x=>x.id===b.dataset.edit);$("diaryTitle").value=n.title;$("diaryText").value=n.text;state.diaries=state.diaries.filter(x=>x.id!==n.id);save();renderDiaries()});document.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>{state.diaries=state.diaries.filter(x=>x.id!==b.dataset.del);save();renderDiaries()})}
+$("diaryForm").onsubmit=e=>{e.preventDefault();state.diaries.push({id:Date.now().toString(),title:$("diaryTitle").value.trim(),text:$("diaryText").value.trim(),date:new Date().toLocaleString("ko-KR")});$("diaryTitle").value="";$("diaryText").value="";save();renderDiaries()};
+function renderPhotos(){$("photos").innerHTML=state.photos.map(p=>`<div class="card"><img class="photo" src="${p.data}" alt="저장한 사진"><button class="light" data-photo="${p.id}">삭제</button></div>`).join("");document.querySelectorAll("[data-photo]").forEach(b=>b.onclick=()=>{state.photos=state.photos.filter(p=>p.id!==b.dataset.photo);save();renderPhotos()})}
+$("photoInput").onchange=async e=>{for(const file of Array.from(e.target.files||[]).slice(0,8-state.photos.length)){if(!file.type.startsWith("image/"))continue;try{let data=await new Promise((resolve,reject)=>{let r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(file)});state.photos.push({id:Date.now().toString()+Math.random(),data});if(!save()){state.photos.pop();break}}catch(err){alert("사진을 읽지 못했어.")}}e.target.value="";renderPhotos()};
+renderProfile();fillProfile();renderChat();renderPosts();renderDiaries();renderPhotos();
+</script>
+</body>
+</html>
