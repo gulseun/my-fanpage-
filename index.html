@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -601,13 +600,13 @@ button { cursor: pointer; }
    ========================================= */
 
 const CHARACTER = {
-  name: "유우",
+  name: "유우시",
   subtitle: "너에게만 다정한 사람",
   status: "online",
   bio: "말수는 적지만 네 이야기라면 오래 들어 준다.",
-  birthday: "03.17",
-  mbti: "ISTP",
-  greeting: "왔어? 기다리고 있었는데."
+  birthday: "04.05",
+  mbti: "ISFJ",
+  greeting: "바보"
 };
 
 /* =========================================
@@ -748,39 +747,68 @@ function renderProfile(body) {
     </div>`;
 }
 
+
+/* 카톡을 열었을 때 보여 줄 고정 대화 */
+const PRESET_CHAT = [
+  { who: "them", text: "보고싶어" },
+  { who: "them", text: "벌써 자는 거 아니지?" },
+  { who: "them", text: "진짜 자? 🥺" },
+  { who: "me", text: "ㅋㅋㅋㅋ 우시 머야" },
+  { who: "me", text: "이제 자야지~" },
+  { who: "me", text: "내일 일찍 일어나야 하는 거 아냐?" },
+  { who: "me", text: "우시 타자가 너무 느리네" },
+  { who: "them", text: "그냥. 네가 보고 싶어서 😭" },
+  { who: "me", text: "임티 고르느라 늦은 겨?" },
+  { who: "them", text: "응" }
+  { who: "me", text: "ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ" },
+  { who: "me", text: "ㅋㅋㅋㅋ 우시 나도 보고싶어" },
+  { who: "them", text: "또 언제 와" }
+  { who: "them", text: "네가 없는 도쿄는 너무 추워" }
+  
+];
+
 function renderTalk(body) {
   body.innerHTML = `
-    <div style="text-align:center;margin-bottom:16px;">
+    <div style="text-align:center; margin-bottom:16px;">
       <img class="avatar" src="wallpaper.jpg" alt="캐릭터 사진">
-      <div style="font-weight:700;margin-top:6px;">${escapeHTML(CHARACTER.name)}</div>
-      <div class="muted">${escapeHTML(CHARACTER.status)}</div>
+      <div style="font-weight:700; margin-top:6px;">
+        ${escapeHTML(CHARACTER.name)}
+      </div>
+      <div class="muted">온라인</div>
     </div>
+
+    <div style="text-align:center; color:#999; font-size:12px; margin-bottom:16px;">
+      오늘
+    </div>
+
     <div class="chat-area" id="chat-area"></div>
-    <form class="chat-form" id="chat-form">
-      <input id="chat-input" autocomplete="off" placeholder="메시지 보내기..." aria-label="메시지">
-      <button type="submit" aria-label="전송">↑</button>
-    </form>`;
+  `;
 
-  const history = getChatHistory();
-  if (history.length === 0) {
-    addMessage("them", CHARACTER.greeting);
-  } else {
-    history.forEach(msg => addMessage(msg.who, msg.text, false));
-  }
+  const area = document.getElementById("chat-area");
 
-  document.getElementById("chat-form").addEventListener("submit", function(event) {
-    event.preventDefault();
-    const input = document.getElementById("chat-input");
-    const text = input.value.trim();
-    if (!text) return;
-
-    addMessage("me", text);
-    input.value = "";
-
-    const reply = getReply(text);
+  PRESET_CHAT.forEach((msg, index) => {
     setTimeout(() => {
-      if (currentApp === "talk") addMessage("them", reply);
-    }, 450);
+      // 카톡 앱을 닫았다면 더 이상 메시지를 추가하지 않음
+      if (currentApp !== "talk") return;
+
+      const bubble = document.createElement("div");
+      bubble.className =
+        "message " + (msg.who === "me" ? "me" : "them");
+
+      bubble.textContent = msg.text;
+      bubble.style.opacity = "0";
+      bubble.style.transform = "translateY(8px)";
+      bubble.style.transition = "opacity .25s, transform .25s";
+
+      area.appendChild(bubble);
+
+      requestAnimationFrame(() => {
+        bubble.style.opacity = "1";
+        bubble.style.transform = "translateY(0)";
+      });
+
+      area.scrollTop = area.scrollHeight;
+    }, index * 800);
   });
 }
 
