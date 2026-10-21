@@ -3,162 +3,1077 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#c7c4be">
-<title>My Fan Page</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#111111">
+<title>My iPhone</title>
+
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:#eee;color:#222}
-button,input,textarea{font:inherit}
-button{cursor:pointer}
-#app{max-width:460px;margin:auto;min-height:100dvh;background:#f6f6f6;padding-bottom:85px}
-header{height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 23px;font-size:12px;font-weight:700}
-.screen{display:none;padding:20px}
-.screen.active{display:block}
-.home{
- min-height:calc(100dvh - 133px);
- background-image:url("wallpaper.jpg");
- background-position:center 43%;
- background-size:cover;
- background-repeat:no-repeat;
- position:relative;
- padding:18px 23px 28px;
- display:flex;flex-direction:column;
+:root {
+  --blue: #0a84ff;
+  --glass: rgba(255,255,255,.23);
+  --line: rgba(255,255,255,.22);
 }
-.home:before{content:"";position:absolute;inset:0;background:linear-gradient(#00000005,transparent 50%,#00000016);pointer-events:none}
-.home>*{position:relative}
-.status{display:flex;justify-content:space-between;font-size:12px;font-weight:700}
-.clock{text-align:center;margin:48px 0 30px;color:white;text-shadow:0 1px 5px #3338}
-.clock .date{font-size:16px}
-.clock .time{font-size:65px;font-weight:300;letter-spacing:-3px}
-.widget{border:1px solid #ffffff70;background:#ffffffa6;backdrop-filter:blur(12px);border-radius:22px;padding:14px;color:#242424;margin-bottom:25px}
-.widget small{font-size:10px;color:#555}
-.apps{display:grid;grid-template-columns:repeat(4,1fr);gap:22px 8px;margin-top:auto}
-.app{border:0;background:none;display:flex;align-items:center;flex-direction:column;gap:7px;font-size:10px;color:white;text-shadow:0 1px 4px #333}
-.icon{height:54px;width:54px;border-radius:15px;display:grid;place-items:center;font-size:23px;background:linear-gradient(145deg,#fafafa,#c7c7c9);color:#343438;box-shadow:0 3px 9px #0003;border:1px solid #fff8}
-.dock{margin-top:24px;padding:12px;border-radius:25px;background:#ffffff75;backdrop-filter:blur(15px);display:flex;justify-content:space-around}
-.dock .icon{height:48px;width:48px}
-h1{font-size:28px;margin:10px 0 22px;letter-spacing:-1px}
-h2{font-size:19px}
-.card{background:white;border:1px solid #e5e5e5;border-radius:17px;padding:16px;margin-bottom:12px}
-.muted{color:#888;font-size:12px}
-button.action{border:0;border-radius:11px;background:#222;color:white;padding:11px 14px}
-button.light{border:1px solid #ddd;border-radius:11px;background:#f4f4f4;color:#222;padding:9px 12px}
-input,textarea{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin:6px 0 12px;background:white}
-textarea{min-height:85px}
-.row{display:flex;gap:8px}
-.row>*{min-width:0}
-.row input{flex:1}
-.bubble{padding:12px 14px;border-radius:16px;margin:10px 0;max-width:85%;white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px;line-height:1.5}
-.bot{background:#e7e7e9;margin-right:auto}
-.user{background:#222;color:white;margin-left:auto}
-#messages{height:45dvh;min-height:250px;overflow:auto}
-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:460px;background:#fafafaeF;backdrop-filter:blur(16px);display:flex;justify-content:space-around;padding:10px 3px calc(10px + env(safe-area-inset-bottom));border-top:1px solid #ddd}
-nav button{border:0;background:none;color:#555;font-size:10px}
-nav b{display:block;font-size:19px;margin-bottom:3px}
-.entry{white-space:pre-wrap;overflow-wrap:anywhere}
-img.photo{width:100%;border-radius:12px;margin-top:8px}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #171717;
+  color: white;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue",
+    "Apple SD Gothic Neo", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+button, input, textarea { font: inherit; }
+button { cursor: pointer; }
+
+.phone {
+  position: relative;
+  width: 100%;
+  max-width: 430px;
+  height: 100dvh;
+  min-height: 580px;
+  margin: auto;
+  overflow: hidden;
+  background: #777;
+  isolation: isolate;
+}
+
+.wallpaper {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background-image: url("wallpaper.jpg");
+  background-position: center;
+  background-size: cover;
+}
+
+.wallpaper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0,0,0,.22),
+    rgba(0,0,0,.04) 45%,
+    rgba(0,0,0,.30)
+  );
+}
+
+.status {
+  height: 48px;
+  padding: 15px 28px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  font-size: 14px;
+  font-weight: 650;
+  text-shadow: 0 1px 4px #333;
+  position: relative;
+  z-index: 5;
+}
+
+.status-right { display: flex; gap: 6px; }
+
+.screen {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+}
+
+.screen.active { display: flex; }
+
+#lock {
+  text-align: center;
+  align-items: center;
+}
+
+.lock-date {
+  margin-top: 55px;
+  font-size: 18px;
+  text-shadow: 0 2px 8px #333;
+}
+
+.lock-clock {
+  margin-top: 1px;
+  font-size: clamp(72px, 22vw, 102px);
+  font-weight: 250;
+  letter-spacing: -5px;
+  line-height: 1.12;
+  text-shadow: 0 2px 10px #4446;
+}
+
+.lock-widget {
+  margin-top: 22px;
+  width: 86%;
+  display: flex;
+  gap: 10px;
+}
+
+.widget {
+  flex: 1;
+  min-width: 0;
+  min-height: 68px;
+  padding: 12px;
+  text-align: left;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255,255,255,.20);
+  backdrop-filter: blur(18px);
+  font-size: 12px;
+}
+
+.widget strong {
+  display: block;
+  font-size: 16px;
+  margin-top: 7px;
+}
+
+.lock-bottom {
+  margin-top: auto;
+  width: 100%;
+  padding: 0 28px max(24px, env(safe-area-inset-bottom));
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.round-button {
+  width: 48px;
+  height: 48px;
+  border: 1px solid #ffffff77;
+  border-radius: 50%;
+  background: #2228;
+  color: white;
+  font-size: 22px;
+  backdrop-filter: blur(12px);
+}
+
+.unlock {
+  position: absolute;
+  bottom: 34px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 180px;
+  padding: 10px;
+  border: 0;
+  background: transparent;
+  color: white;
+  font-size: 13px;
+  text-shadow: 0 1px 5px black;
+}
+
+.home-content {
+  flex: 1;
+  padding: 18px 23px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.home-widgets {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 5px 0 27px;
+}
+
+.home-widget {
+  height: 108px;
+  border-radius: 23px;
+  padding: 13px;
+  background: rgba(255,255,255,.22);
+  border: 1px solid #ffffff45;
+  backdrop-filter: blur(16px);
+  text-shadow: 0 1px 4px #5555;
+  font-size: 12px;
+}
+
+.home-widget .big {
+  font-size: 29px;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.app-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 8px;
+  row-gap: 25px;
+}
+
+.app {
+  border: 0;
+  background: transparent;
+  color: white;
+  padding: 0;
+  min-width: 0;
+  text-align: center;
+  text-shadow: 0 1px 4px #333;
+}
+
+.app-icon {
+  width: 57px;
+  height: 57px;
+  margin: 0 auto 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  font-size: 29px;
+  box-shadow: 0 3px 8px #0003;
+}
+
+.app-label {
+  display: block;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.icon-talk { background: linear-gradient(#69e078, #29bd56); }
+.icon-profile { background: linear-gradient(#e6c7ff, #9870dc); }
+.icon-social { background: linear-gradient(#ff9ec7, #e94882); }
+.icon-gallery { background: linear-gradient(#fff,#e6e6e6); }
+.icon-diary { background: linear-gradient(#ffe68c,#e6aa45); }
+.icon-setting { background: linear-gradient(#b9c1ca,#6b7785); }
+
+.home-dock {
+  margin: auto 0 14px;
+  padding: 12px 10px;
+  border-radius: 27px;
+  background: rgba(255,255,255,.24);
+  border: 1px solid #ffffff44;
+  backdrop-filter: blur(25px);
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 8px;
+}
+
+.home-dock .app-icon {
+  width: 52px;
+  height: 52px;
+}
+
+.home-indicator {
+  width: 108px;
+  height: 4px;
+  border-radius: 8px;
+  background: white;
+  margin: 0 auto 7px;
+  flex-shrink: 0;
+}
+
+#home { padding-bottom: max(4px, env(safe-area-inset-bottom)); }
+
+#app-screen {
+  background: #f5f5f7;
+  color: #222;
+}
+
+.app-header {
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  padding: 0 17px;
+  border-bottom: 1px solid #ddd;
+  background: #f5f5f7ee;
+  gap: 12px;
+}
+
+.back {
+  border: 0;
+  background: transparent;
+  color: var(--blue);
+  font-size: 16px;
+  padding: 8px 0;
+}
+
+.app-title {
+  flex: 1;
+  text-align: center;
+  font-weight: 700;
+  margin-right: 40px;
+}
+
+.app-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px;
+  overscroll-behavior: contain;
+}
+
+.app-body button, .app-body input, .app-body textarea {
+  max-width: 100%;
+}
+
+.profile-card {
+  text-align: center;
+  background: white;
+  border-radius: 22px;
+  padding: 23px 18px;
+  box-shadow: 0 2px 12px #00000008;
+}
+
+.avatar {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 50%;
+  background: #ddd;
+  border: 3px solid white;
+  box-shadow: 0 2px 12px #0002;
+}
+
+.muted { color: #888; font-size: 13px; }
+.section-title { font-size: 20px; margin: 0 0 15px; }
+
+.info-card {
+  background: white;
+  border-radius: 17px;
+  padding: 16px;
+  margin: 12px 0;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+
+.primary {
+  border: 0;
+  border-radius: 12px;
+  background: var(--blue);
+  color: white;
+  padding: 11px 15px;
+}
+
+.field {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background: white;
+  color: #222;
+  margin: 9px 0;
+  outline-color: var(--blue);
+}
+
+.chat-area {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 16px;
+}
+
+.message {
+  max-width: 82%;
+  padding: 11px 14px;
+  border-radius: 18px;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.message.them {
+  align-self: flex-start;
+  background: white;
+  border: 1px solid #eee;
+  border-bottom-left-radius: 5px;
+}
+
+.message.me {
+  align-self: flex-end;
+  background: #0a84ff;
+  color: white;
+  border-bottom-right-radius: 5px;
+}
+
+.chat-form {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  gap: 8px;
+  padding: 10px 0 max(8px, env(safe-area-inset-bottom));
+  background: #f5f5f7;
+}
+
+.chat-form input {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 22px;
+  padding: 11px 14px;
+  color: #222;
+}
+
+.chat-form button {
+  border: 0;
+  background: var(--blue);
+  color: white;
+  border-radius: 50%;
+  width: 43px;
+  height: 43px;
+  font-size: 20px;
+}
+
+.post {
+  background: white;
+  padding: 16px;
+  border-radius: 18px;
+  margin-bottom: 14px;
+}
+
+.post img, .gallery-img {
+  width: 100%;
+  border-radius: 12px;
+  object-fit: cover;
+  margin-top: 9px;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 10px;
+}
+
+.gallery-img { aspect-ratio: 1; margin: 0; }
+
+.note {
+  width: 100%;
+  min-height: 125px;
+  resize: vertical;
+}
+
+.small-button {
+  border: 0;
+  border-radius: 9px;
+  padding: 8px 11px;
+  background: #e8e8ed;
+  color: #222;
+  margin: 4px 3px 4px 0;
+}
+
+.empty {
+  text-align: center;
+  color: #888;
+  padding: 28px 8px;
+}
+
+#toast {
+  position: absolute;
+  z-index: 20;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #222e;
+  color: white;
+  padding: 11px 17px;
+  border-radius: 22px;
+  font-size: 13px;
+  display: none;
+  max-width: 85%;
+}
+
+@media (min-width: 500px) {
+  .phone {
+    margin-top: 20px;
+    height: min(900px, calc(100dvh - 40px));
+    border: 6px solid #282828;
+    border-radius: 42px;
+  }
+  body { background: #252525; }
+}
 </style>
 </head>
+
 <body>
-<div id="app">
-<header><span>◉</span><span>MY FAN PAGE</span><span id="battery">100% ▰</span></header>
+<div class="phone" id="phone">
+  <div class="wallpaper"></div>
 
-<section id="home" class="screen home active">
- <div class="status"><span>● ● ●</span><span>◉ ▰</span></div>
- <div class="clock"><div class="date" id="date"></div><div class="time" id="time"></div></div>
- <div class="widget"><small>YOUR PERSONAL SPACE</small><h2 id="homeName">YOUR CHARACTER</h2><div class="muted">오늘도 좋은 하루 보내기 ♡</div></div>
- <div class="apps">
-  <button class="app" data-page="talk"><span class="icon">●</span>TALK</button>
-  <button class="app" data-page="profile"><span class="icon">♙</span>PROFILE</button>
-  <button class="app" data-page="social"><span class="icon">▤</span>SOCIAL</button>
-  <button class="app" data-page="gallery"><span class="icon">▧</span>GALLERY</button>
-  <button class="app" data-page="diary"><span class="icon">✎</span>DIARY</button>
- </div>
- <div class="dock">
-  <button class="app" data-page="talk"><span class="icon">✉</span></button>
-  <button class="app" data-page="profile"><span class="icon">♙</span></button>
-  <button class="app" data-page="gallery"><span class="icon">▧</span></button>
- </div>
- <p style="font-size:9px;text-align:center;color:white;text-shadow:0 1px 3px #333">UNOFFICIAL FAN-MADE PAGE · NOT AFFILIATED WITH ANY ARTIST</p>
-</section>
+  <div class="status">
+    <span id="status-time">9:41</span>
+    <span class="status-right">●●●　 Wi-Fi　▰</span>
+  </div>
 
-<section id="talk" class="screen">
- <button class="light" data-page="home">← 홈</button><h1>TALK.</h1>
- <div class="card"><b id="talkName">YOUR CHARACTER</b><div class="muted">팬메이드 대화 시뮬레이션</div></div>
- <div id="messages"></div>
- <form id="chatForm" class="row"><input id="chatInput" placeholder="메시지 입력..." maxlength="300" required><button class="action">전송</button></form>
- <button id="clearChat" class="light">대화 초기화</button>
-</section>
+  <!-- 잠금 화면 -->
+  <section class="screen active" id="lock">
+    <div class="lock-date" id="lock-date">10월 21일 수요일</div>
+    <div class="lock-clock" id="lock-clock">9:41</div>
 
-<section id="profile" class="screen">
- <button class="light" data-page="home">← 홈</button><h1>PROFILE.</h1>
- <div class="card"><h2 id="pName">YOUR CHARACTER</h2><p id="pTag" class="muted"></p><p id="pBio"></p></div>
- <div class="card"><label>캐릭터 이름<input id="nameInput" maxlength="40"></label><label>한 줄 소개<input id="tagInput" maxlength="80"></label><label>프로필 소개<textarea id="bioInput" maxlength="500"></textarea></label><button id="saveProfile" class="action">저장</button></div>
- <p class="muted">비공식 팬메이드 콘텐츠이며 실제 인물의 공식 메시지가 아니야.</p>
-</section>
+    <div class="lock-widget">
+      <div class="widget">
+        ☁️ 오늘의 날씨
+        <strong>오늘도 좋은 하루</strong>
+      </div>
+      <div class="widget">
+        ♡ 알림
+        <strong>새로운 메시지 1개</strong>
+      </div>
+    </div>
 
-<section id="social" class="screen">
- <button class="light" data-page="home">← 홈</button><h1>SOCIAL.</h1>
- <form id="postForm" class="card"><textarea id="postInput" maxlength="1000" placeholder="게시물을 작성해..." required></textarea><button class="action">게시하기</button></form>
- <div id="posts"></div>
-</section>
+    <div class="lock-bottom">
+      <button class="round-button" onclick="showToast('손전등 기능은 꾸밈용이에요.')">☼</button>
+      <button class="round-button" onclick="showToast('카메라 기능은 아직 연결하지 않았어요.')">📷</button>
+    </div>
 
-<section id="gallery" class="screen">
- <button class="light" data-page="home">← 홈</button><h1>GALLERY.</h1>
- <div class="card"><input id="photoInput" type="file" accept="image/*" multiple><p class="muted">사진은 이 브라우저에 저장돼. 용량이 큰 사진을 많이 넣으면 저장 공간이 부족할 수 있어.</p></div>
- <div id="photos"></div>
-</section>
+    <button class="unlock" onclick="goHome()">
+      ↑ 위로 쓸어 올려 열기
+    </button>
+  </section>
 
-<section id="diary" class="screen">
- <button class="light" data-page="home">← 홈</button><h1>DIARY.</h1>
- <form id="diaryForm" class="card"><input id="diaryTitle" placeholder="제목" maxlength="100" required><textarea id="diaryText" placeholder="메모..." maxlength="3000" required></textarea><button class="action">저장하기</button></form>
- <div id="diaries"></div>
-</section>
+  <!-- 홈 화면 -->
+  <section class="screen" id="home">
+    <div class="home-content">
+      <div class="home-widgets">
+        <div class="home-widget">
+          <span id="home-date">10월 21일</span>
+          <div class="big" id="home-day">수요일</div>
+          오늘도 너답게
+        </div>
+        <div class="home-widget">
+          <span>지금 이 순간</span>
+          <div class="big" id="home-clock">9:41</div>
+          <span>너의 작은 세계</span>
+        </div>
+      </div>
 
-<nav>
- <button data-page="home"><b>⌂</b>HOME</button>
- <button data-page="talk"><b>●</b>TALK</button>
- <button data-page="profile"><b>♙</b>PROFILE</button>
- <button data-page="social"><b>▤</b>SOCIAL</button>
- <button data-page="diary"><b>✎</b>DIARY</button>
-</nav>
+      <div class="app-grid">
+        <button class="app" onclick="openApp('talk')">
+          <span class="app-icon icon-talk">💬</span>
+          <span class="app-label">TALK</span>
+        </button>
+        <button class="app" onclick="openApp('profile')">
+          <span class="app-icon icon-profile">👤</span>
+          <span class="app-label">PROFILE</span>
+        </button>
+        <button class="app" onclick="openApp('social')">
+          <span class="app-icon icon-social">📸</span>
+          <span class="app-label">SOCIAL</span>
+        </button>
+        <button class="app" onclick="openApp('gallery')">
+          <span class="app-icon icon-gallery">🌄</span>
+          <span class="app-label">GALLERY</span>
+        </button>
+        <button class="app" onclick="openApp('diary')">
+          <span class="app-icon icon-diary">📔</span>
+          <span class="app-label">DIARY</span>
+        </button>
+        <button class="app" onclick="openApp('settings')">
+          <span class="app-icon icon-setting">⚙️</span>
+          <span class="app-label">SETTINGS</span>
+        </button>
+      </div>
+
+      <div class="home-dock">
+        <button class="app" onclick="openApp('talk')">
+          <span class="app-icon icon-talk">💬</span>
+        </button>
+        <button class="app" onclick="openApp('social')">
+          <span class="app-icon icon-social">📸</span>
+        </button>
+        <button class="app" onclick="openApp('gallery')">
+          <span class="app-icon icon-gallery">🌄</span>
+        </button>
+        <button class="app" onclick="openApp('diary')">
+          <span class="app-icon icon-diary">📔</span>
+        </button>
+      </div>
+    </div>
+    <div class="home-indicator"></div>
+  </section>
+
+  <!-- 앱 화면 -->
+  <section class="screen" id="app-screen">
+    <div class="app-header">
+      <button class="back" onclick="goHome()">‹ 홈</button>
+      <div class="app-title" id="app-title">TALK</div>
+    </div>
+    <div class="app-body" id="app-body"></div>
+    <div class="home-indicator" style="background:#222; margin-bottom:7px;"></div>
+  </section>
+
+  <div id="toast"></div>
 </div>
+
 <script>
-const KEY="my-fan-page-v1";
-const initial={profile:{name:"YOUR CHARACTER",tag:"A little world just for you.",bio:"차분하지만 다정하고 장난을 좋아하는 캐릭터."},chat:[],posts:[],photos:[],diaries:[]};
-let state;
-try{state={...initial,...JSON.parse(localStorage.getItem(KEY)||"{}")};state.profile={...initial.profile,...state.profile};for(const k of ["chat","posts","photos","diaries"])if(!Array.isArray(state[k]))state[k]=[]}catch(e){state=JSON.parse(JSON.stringify(initial))}
-const $=id=>document.getElementById(id);
-function save(){try{localStorage.setItem(KEY,JSON.stringify(state));return true}catch(e){alert("저장 공간이 부족해. 사진이나 기록을 줄여 줘.");return false}}
-function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function go(id){document.querySelectorAll(".screen").forEach(s=>s.classList.toggle("active",s.id===id));window.scrollTo(0,0);if(id==="talk")renderChat();if(id==="profile")fillProfile()}
-document.querySelectorAll("[data-page]").forEach(b=>b.addEventListener("click",()=>go(b.dataset.page)));
-function updateClock(){let d=new Date();$("time").textContent=d.toLocaleTimeString("ko-KR",{hour:"2-digit",minute:"2-digit",hour12:false});$("date").textContent=d.toLocaleDateString("ko-KR",{month:"long",day:"numeric",weekday:"long"})}
-updateClock();setInterval(updateClock,30000);
-function renderProfile(){let p=state.profile;$("homeName").textContent=p.name;$("talkName").textContent=p.name;$("pName").textContent=p.name;$("pTag").textContent=p.tag;$("pBio").textContent=p.bio}
-function fillProfile(){$("nameInput").value=state.profile.name;$("tagInput").value=state.profile.tag;$("bioInput").value=state.profile.bio}
-$("saveProfile").onclick=()=>{let name=$("nameInput").value.trim();if(!name)return alert("이름을 입력해 줘.");state.profile={name,tag:$("tagInput").value.trim(),bio:$("bioInput").value.trim()};save();renderProfile();alert("프로필 저장 완료!")};
-const replies=[
-[/안녕|하이|ㅎㅇ|hello|hi/i,["왔어? 기다리고 있었어.","안녕. 오늘은 어땠어?"]],
-[/보고 ?싶|그리워/,["나도 네가 와 줘서 좋아.","그런 말 들으면 기분 좋아지잖아."]],
-[/힘들|우울|슬퍼|피곤|지쳤/,["오늘 많이 힘들었구나. 잠깐 쉬어도 괜찮아.","오늘 하루 버틴 것만으로도 충분히 잘했어."]],
-[/사랑|좋아해/,["그 말 조금 더 해 줘도 되는데.","갑자기 그렇게 말하면 부끄럽잖아."]],
-[/잘 ?자|굿나잇/,["잘 자. 좋은 꿈 꿔.","오늘도 수고했어. 푹 쉬어."]],
-[/고마워|감사/,["나한테 말해 줘서 고마워.","언제든 편하게 이야기해."]],
-[/밥|먹었/,["밥은 잘 챙겨 먹었어?","끼니 거르지 말고 꼭 챙겨 먹어."]]
+/* =========================================
+   1. 여기부터 캐릭터 정보를 바꿔 주세요!
+   ========================================= */
+
+const CHARACTER = {
+  name: "유우",
+  subtitle: "너에게만 다정한 사람",
+  status: "online",
+  bio: "말수는 적지만 네 이야기라면 오래 들어 준다.",
+  birthday: "03.17",
+  mbti: "ISTP",
+  greeting: "왔어? 기다리고 있었는데."
+};
+
+/* =========================================
+   2. 캐릭터 대화 설정
+   키워드와 답변을 직접 바꿀 수 있어요.
+   ========================================= */
+
+const DIALOGUES = [
+  {
+    keywords: ["안녕", "하이", "왔어", "ㅎㅇ"],
+    replies: ["왔어?", "안녕. 오늘은 어땠어?", "기다리고 있었어."]
+  },
+  {
+    keywords: ["뭐 해", "뭐해", "뭐하고 있어"],
+    replies: ["그냥 너 생각 중.", "딱히. 너는?", "네 연락 기다리고 있었는데."]
+  },
+  {
+    keywords: ["보고 싶어", "보고싶어", "보고 싶다"],
+    replies: ["나도 보고 싶어.", "그럼 지금 보러 올래?", "그런 말 갑자기 하면 반칙이지."]
+  },
+  {
+    keywords: ["사랑해", "좋아해"],
+    replies: ["……갑자기 그런 말을 한다고?", "나도 좋아해.", "한 번만 더 말해 봐."]
+  },
+  {
+    keywords: ["잘 자", "잘자", "굿나잇"],
+    replies: ["응. 좋은 꿈 꿔.", "자기 전에 내 생각도 조금 해.", "잘 자. 내일도 연락해."]
+  },
+  {
+    keywords: ["미안", "미안해"],
+    replies: ["괜찮아. 너무 신경 쓰지 마.", "다음부터 그러지 않으면 돼."]
+  },
+  {
+    keywords: ["고마워", "고마워요"],
+    replies: ["뭘 이런 걸 가지고.", "너한테는 이 정도쯤이야."]
+  },
+  {
+    keywords: ["귀여워", "귀엽다"],
+    replies: ["누가 누구 보고 귀엽대.", "……그 말 취소해.", "너한테만 이런 거야."]
+  },
+  {
+    keywords: ["싫어", "화났어"],
+    replies: ["왜 그래. 무슨 일 있어?", "내가 뭘 잘못했는데? 말해 봐."]
+  },
+  {
+    keywords: ["힘들어", "우울해", "속상해"],
+    replies: ["오늘 무슨 일 있었어? 얘기해도 돼.", "많이 힘들었겠다. 내가 들어 줄게."]
+  }
 ];
-function reply(t){let r=replies.find(([re])=>re.test(t));return r?r[1][Math.floor(Math.random()*r[1].length)]:["진짜? 그다음엔 어떻게 됐어?","조금 더 이야기해 줘. 듣고 있어.","네 생각이 궁금해."][Math.floor(Math.random()*3)]}
-function renderChat(){if(!state.chat.length)state.chat.push({who:"bot",text:"왔어? 오늘은 무슨 이야기 할까?"});$("messages").innerHTML=state.chat.map(m=>`<div class="bubble ${m.who==="user"?"user":"bot"}">${esc(m.text)}</div>`).join("");$("messages").scrollTop=$("messages").scrollHeight;save()}
-$("chatForm").onsubmit=e=>{e.preventDefault();let t=$("chatInput").value.trim();if(!t)return;state.chat.push({who:"user",text:t},{who:"bot",text:reply(t)});state.chat=state.chat.slice(-150);$("chatInput").value="";save();renderChat()};
-$("clearChat").onclick=()=>{if(confirm("대화를 모두 지울까?")){state.chat=[];save();renderChat()}};
-function renderPosts(){$("posts").innerHTML=[...state.posts].reverse().map(p=>`<div class="card"><div class="muted">${esc(p.date)}</div><p class="entry">${esc(p.text)}</p><button class="light" data-delete-post="${p.id}">삭제</button></div>`).join("");document.querySelectorAll("[data-delete-post]").forEach(b=>b.onclick=()=>{state.posts=state.posts.filter(p=>p.id!==b.dataset.deletePost);save();renderPosts()})}
-$("postForm").onsubmit=e=>{e.preventDefault();state.posts.push({id:Date.now().toString(),text:$("postInput").value.trim(),date:new Date().toLocaleString("ko-KR")});$("postInput").value="";save();renderPosts()};
-function renderDiaries(){$("diaries").innerHTML=[...state.diaries].reverse().map(n=>`<div class="card"><h3>${esc(n.title)}</h3><div class="muted">${esc(n.date)}</div><p class="entry">${esc(n.text)}</p><button class="light" data-edit="${n.id}">수정</button> <button class="light" data-del="${n.id}">삭제</button></div>`).join("");document.querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>{let n=state.diaries.find(x=>x.id===b.dataset.edit);$("diaryTitle").value=n.title;$("diaryText").value=n.text;state.diaries=state.diaries.filter(x=>x.id!==n.id);save();renderDiaries()});document.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>{state.diaries=state.diaries.filter(x=>x.id!==b.dataset.del);save();renderDiaries()})}
-$("diaryForm").onsubmit=e=>{e.preventDefault();state.diaries.push({id:Date.now().toString(),title:$("diaryTitle").value.trim(),text:$("diaryText").value.trim(),date:new Date().toLocaleString("ko-KR")});$("diaryTitle").value="";$("diaryText").value="";save();renderDiaries()};
-function renderPhotos(){$("photos").innerHTML=state.photos.map(p=>`<div class="card"><img class="photo" src="${p.data}" alt="저장한 사진"><button class="light" data-photo="${p.id}">삭제</button></div>`).join("");document.querySelectorAll("[data-photo]").forEach(b=>b.onclick=()=>{state.photos=state.photos.filter(p=>p.id!==b.dataset.photo);save();renderPhotos()})}
-$("photoInput").onchange=async e=>{for(const file of Array.from(e.target.files||[]).slice(0,8-state.photos.length)){if(!file.type.startsWith("image/"))continue;try{let data=await new Promise((resolve,reject)=>{let r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(file)});state.photos.push({id:Date.now().toString()+Math.random(),data});if(!save()){state.photos.pop();break}}catch(err){alert("사진을 읽지 못했어.")}}e.target.value="";renderPhotos()};
-renderProfile();fillProfile();renderChat();renderPosts();renderDiaries();renderPhotos();
+
+const DEFAULT_REPLIES = [
+  "그래서 어떻게 됐는데?",
+  "조금 더 얘기해 봐. 듣고 있어.",
+  "음, 무슨 뜻인지 알 것 같기도 해.",
+  "너는 어떻게 생각하는데?",
+  "갑자기 그런 얘기를 하네. 더 말해 봐."
+];
+
+/* =========================================
+   3. 화면 전환 기능
+   ========================================= */
+
+const screens = ["lock", "home", "app-screen"];
+let currentApp = "";
+let toastTimer;
+
+function showScreen(id) {
+  screens.forEach(screenId => {
+    document.getElementById(screenId).classList.toggle(
+      "active", screenId === id
+    );
+  });
+}
+
+function goHome() {
+  currentApp = "";
+  showScreen("home");
+}
+
+function lockPhone() {
+  showScreen("lock");
+}
+
+function openApp(name) {
+  currentApp = name;
+  showScreen("app-screen");
+
+  const titles = {
+    talk: "TALK",
+    profile: "PROFILE",
+    social: "SOCIAL",
+    gallery: "GALLERY",
+    diary: "DIARY",
+    settings: "SETTINGS"
+  };
+
+  document.getElementById("app-title").textContent = titles[name];
+  renderApp(name);
+}
+
+function showToast(message) {
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+  toast.style.display = "block";
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.style.display = "none", 2200);
+}
+
+/* =========================================
+   4. 앱 화면 만들기
+   ========================================= */
+
+function renderApp(name) {
+  const body = document.getElementById("app-body");
+
+  if (name === "talk") renderTalk(body);
+  if (name === "profile") renderProfile(body);
+  if (name === "social") renderSocial(body);
+  if (name === "gallery") renderGallery(body);
+  if (name === "diary") renderDiary(body);
+  if (name === "settings") renderSettings(body);
+}
+
+function renderProfile(body) {
+  body.innerHTML = `
+    <div class="profile-card">
+      <img class="avatar" src="wallpaper.jpg" alt="캐릭터 사진">
+      <h2>${escapeHTML(CHARACTER.name)}</h2>
+      <p class="muted">${escapeHTML(CHARACTER.subtitle)}</p>
+      <p>${escapeHTML(CHARACTER.bio)}</p>
+    </div>
+    <div class="info-card">
+      <b>생일</b><br>${escapeHTML(CHARACTER.birthday)}
+      <hr style="border:0;border-top:1px solid #eee">
+      <b>MBTI</b><br>${escapeHTML(CHARACTER.mbti)}
+      <hr style="border:0;border-top:1px solid #eee">
+      <b>상태</b><br>${escapeHTML(CHARACTER.status)}
+    </div>`;
+}
+
+function renderTalk(body) {
+  body.innerHTML = `
+    <div style="text-align:center;margin-bottom:16px;">
+      <img class="avatar" src="wallpaper.jpg" alt="캐릭터 사진">
+      <div style="font-weight:700;margin-top:6px;">${escapeHTML(CHARACTER.name)}</div>
+      <div class="muted">${escapeHTML(CHARACTER.status)}</div>
+    </div>
+    <div class="chat-area" id="chat-area"></div>
+    <form class="chat-form" id="chat-form">
+      <input id="chat-input" autocomplete="off" placeholder="메시지 보내기..." aria-label="메시지">
+      <button type="submit" aria-label="전송">↑</button>
+    </form>`;
+
+  const history = getChatHistory();
+  if (history.length === 0) {
+    addMessage("them", CHARACTER.greeting);
+  } else {
+    history.forEach(msg => addMessage(msg.who, msg.text, false));
+  }
+
+  document.getElementById("chat-form").addEventListener("submit", function(event) {
+    event.preventDefault();
+    const input = document.getElementById("chat-input");
+    const text = input.value.trim();
+    if (!text) return;
+
+    addMessage("me", text);
+    input.value = "";
+
+    const reply = getReply(text);
+    setTimeout(() => {
+      if (currentApp === "talk") addMessage("them", reply);
+    }, 450);
+  });
+}
+
+function getReply(message) {
+  const normalized = message.toLowerCase().replace(/\s+/g, " ").trim();
+
+  const matched = DIALOGUES.find(item =>
+    item.keywords.some(keyword => normalized.includes(keyword.toLowerCase()))
+  );
+
+  const choices = matched ? matched.replies : DEFAULT_REPLIES;
+  return choices[Math.floor(Math.random() * choices.length)];
+}
+
+function getChatHistory() {
+  try {
+    return JSON.parse(localStorage.getItem("fan-chat") || "[]");
+  } catch {
+    return [];
+  }
+}
+
+function addMessage(who, text, save = true) {
+  const area = document.getElementById("chat-area");
+  if (!area) return;
+
+  const message = document.createElement("div");
+  message.className = "message " + (who === "me" ? "me" : "them");
+  message.textContent = text;
+  area.appendChild(message);
+  area.scrollTop = area.scrollHeight;
+
+  if (save) {
+    const history = getChatHistory();
+    history.push({ who, text });
+    localStorage.setItem("fan-chat", JSON.stringify(history.slice(-150)));
+  }
+}
+
+function renderSocial(body) {
+  const posts = getStored("fan-posts", []);
+  body.innerHTML = `
+    <h2 class="section-title">SOCIAL</h2>
+    <div class="info-card">
+      <b>새 게시물 작성</b>
+      <textarea class="field" id="post-text" rows="3" placeholder="무슨 일이 있었나요?"></textarea>
+      <button class="primary" id="post-add">게시하기</button>
+    </div>
+    <div id="post-list"></div>`;
+
+  document.getElementById("post-add").onclick = () => {
+    const text = document.getElementById("post-text").value.trim();
+    if (!text) return showToast("게시물 내용을 입력해 주세요.");
+
+    posts.unshift({ text, date: new Date().toLocaleDateString("ko-KR") });
+    localStorage.setItem("fan-posts", JSON.stringify(posts));
+    renderSocial(body);
+  };
+
+  const list = document.getElementById("post-list");
+  if (!posts.length) {
+    list.innerHTML = '<div class="empty">아직 게시물이 없어요.</div>';
+    return;
+  }
+
+  posts.forEach((post, index) => {
+    const card = document.createElement("div");
+    card.className = "post";
+
+    const date = document.createElement("div");
+    date.className = "muted";
+    date.textContent = post.date || "";
+
+    const content = document.createElement("p");
+    content.textContent = post.text;
+
+    const remove = document.createElement("button");
+    remove.className = "small-button";
+    remove.textContent = "삭제";
+    remove.onclick = () => {
+      posts.splice(index, 1);
+      localStorage.setItem("fan-posts", JSON.stringify(posts));
+      renderSocial(body);
+    };
+
+    card.append(date, content, remove);
+    list.appendChild(card);
+  });
+}
+
+function renderGallery(body) {
+  const photos = getStored("fan-gallery", []);
+  body.innerHTML = `
+    <h2 class="section-title">GALLERY</h2>
+    <div class="info-card">
+      <p>사진을 선택하면 이 브라우저에서 갤러리에 추가돼요.</p>
+      <input class="field" id="photo-file" type="file" accept="image/*">
+      <button class="primary" id="photo-add">사진 추가</button>
+      <p class="muted">개인 브라우저에 저장되며 다른 사람에게 자동 공개되지는 않아요.</p>
+    </div>
+    <div class="gallery-grid" id="gallery-grid"></div>`;
+
+  document.getElementById("photo-add").onclick = () => {
+    const file = document.getElementById("photo-file").files[0];
+    if (!file) return showToast("먼저 사진을 선택해 주세요.");
+
+    if (file.size > 1200000) {
+      return showToast("1.2MB보다 작은 사진을 선택해 주세요.");
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const updated = getStored("fan-gallery", []);
+      updated.unshift(reader.result);
+      try {
+        localStorage.setItem("fan-gallery", JSON.stringify(updated.slice(0, 12)));
+        renderGallery(body);
+      } catch {
+        showToast("저장 공간이 부족해요. 사진을 줄여 주세요.");
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const grid = document.getElementById("gallery-grid");
+  if (!photos.length) {
+    grid.innerHTML = '<div class="empty" style="grid-column:1/-1">아직 사진이 없어요.</div>';
+  } else {
+    photos.forEach((src, index) => {
+      const wrap = document.createElement("div");
+      const img = document.createElement("img");
+      img.className = "gallery-img";
+      img.src = src;
+      img.alt = "갤러리 사진";
+      const del = document.createElement("button");
+      del.className = "small-button";
+      del.textContent = "삭제";
+      del.onclick = () => {
+        const updated = getStored("fan-gallery", []);
+        updated.splice(index, 1);
+        localStorage.setItem("fan-gallery", JSON.stringify(updated));
+        renderGallery(body);
+      };
+      wrap.append(img, del);
+      grid.appendChild(wrap);
+    });
+  }
+}
+
+function renderDiary(body) {
+  const notes = getStored("fan-diary", []);
+  body.innerHTML = `
+    <h2 class="section-title">DIARY</h2>
+    <div class="info-card">
+      <input class="field" id="diary-title" placeholder="제목">
+      <textarea class="field note" id="diary-text" placeholder="오늘의 기록..."></textarea>
+      <button class="primary" id="diary-save">기록 저장</button>
+    </div>
+    <div id="diary-list"></div>`;
+
+  document.getElementById("diary-save").onclick = () => {
+    const title = document.getElementById("diary-title").value.trim();
+    const text = document.getElementById("diary-text").value.trim();
+    if (!title && !text) return showToast("내용을 입력해 주세요.");
+
+    notes.unshift({
+      title: title || "제목 없음",
+      text,
+      date: new Date().toLocaleDateString("ko-KR")
+    });
+    localStorage.setItem("fan-diary", JSON.stringify(notes));
+    renderDiary(body);
+  };
+
+  const list = document.getElementById("diary-list");
+  if (!notes.length) {
+    list.innerHTML = '<div class="empty">아직 작성한 일기가 없어요.</div>';
+  }
+
+  notes.forEach((note, index) => {
+    const card = document.createElement("div");
+    card.className = "info-card";
+
+    const heading = document.createElement("b");
+    heading.textContent = note.title;
+
+    const date = document.createElement("div");
+    date.className = "muted";
+    date.textContent = note.date || "";
+
+    const content = document.createElement("p");
+    content.style.whiteSpace = "pre-wrap";
+    content.textContent = note.text;
+
+    const remove = document.createElement("button");
+    remove.className = "small-button";
+    remove.textContent = "삭제";
+    remove.onclick = () => {
+      notes.splice(index, 1);
+      localStorage.setItem("fan-diary", JSON.stringify(notes));
+      renderDiary(body);
+    };
+
+    card.append(heading, date, content, remove);
+    list.appendChild(card);
+  });
+}
+
+function renderSettings(body) {
+  body.innerHTML = `
+    <h2 class="section-title">SETTINGS</h2>
+    <div class="info-card">
+      <b>캐릭터 정보 수정</b>
+      <p class="muted">이 화면에서는 이름이나 소개를 직접 바꿀 수 있어요.</p>
+      <label>캐릭터 이름
+        <input class="field" id="setting-name" value="${escapeHTML(CHARACTER.name)}">
+      </label>
+      <label>한 줄 소개
+        <input class="field" id="setting-subtitle" value="${escapeHTML(CHARACTER.subtitle)}">
+      </label>
+      <label>소개
+        <textarea class="field" id="setting-bio">${escapeHTML(CHARACTER.bio)}</textarea>
+      </label>
+      <button class="primary" id="setting-save">정보 저장</button>
+    </div>
+    <div class="info-card">
+      <b>대화 기록 초기화</b>
+      <p class="muted">저장된 대화 기록만 삭제해요.</p>
+      <button class="small-button" id="clear-chat">대화 삭제</button>
+    </div>`;
+
+  document.getElementById("setting-save").onclick = () => {
+    CHARACTER.name = document.getElementById("setting-name").value.trim() || "유우";
+    CHARACTER.subtitle = document.getElementById("setting-subtitle").value.trim();
+    CHARACTER.bio = document.getElementById("setting-bio").value.trim();
+    showToast("현재 화면에 캐릭터 정보가 반영됐어요.");
+    renderSettings(body);
+  };
+
+  document.getElementById("clear-chat").onclick = () => {
+    if (confirm("대화 기록을 모두 삭제할까요?")) {
+      localStorage.removeItem("fan-chat");
+      showToast("대화 기록을 삭제했어요.");
+    }
+  };
+}
+
+/* =========================================
+   5. 공통 도구와 시계
+   ========================================= */
+
+function getStored(key, fallback) {
+  try {
+    return JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback));
+  } catch {
+    return fallback;
+  }
+}
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[char]);
+}
+
+function updateClock() {
+  const now = new Date();
+  const time = now.toLocaleTimeString("ko-KR", {
+    hour: "numeric", minute: "2-digit", hour12: false
+  });
+
+  document.getElementById("status-time").textContent = time;
+  document.getElementById("lock-clock").textContent = time;
+  document.getElementById("home-clock").textContent = time;
+
+  document.getElementById("lock-date").textContent =
+    now.toLocaleDateString("ko-KR", {
+      month: "long", day: "numeric", weekday: "long"
+    });
+
+  document.getElementById("home-date").textContent =
+    now.toLocaleDateString("ko-KR", { month: "long", day: "numeric" });
+
+  document.getElementById("home-day").textContent =
+    now.toLocaleDateString("ko-KR", { weekday: "long" });
+}
+
+updateClock();
+setInterval(updateClock, 30000);
 </script>
 </body>
 </html>
